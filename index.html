@@ -34,6 +34,9 @@
       justify-content: center;
       background: #020617;
       color: #06b6d4;
+      z-index: 9999;
+      position: fixed;
+      inset: 0;
     }
     .loader-bar {
       width: 200px;
@@ -69,14 +72,26 @@
 </head>
 <body>
   <div id="root">
-    <div class="loading-screen">
+    <div class="loading-screen" id="initial-loader">
       <div style="font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 0.3em; font-weight: bold;">AEGIS</div>
       <div style="font-size: 0.6rem; opacity: 0.5; margin-top: 5px; letter-spacing: 0.1em;">INITIALIZING PHANTOM PROTOCOL</div>
       <div class="loader-bar">
         <div class="loader-progress"></div>
       </div>
+      <div id="debug-info" style="font-size: 8px; margin-top: 20px; opacity: 0.3;">BOOTING_CORE...</div>
     </div>
   </div>
   <script type="module" src="/index.tsx"></script>
+  <script>
+    // Fail-safe: ja lietotne neielādējas 8 sekundēs, rādīt kļūdu
+    setTimeout(() => {
+      const debug = document.getElementById('debug-info');
+      if (debug && document.querySelector('.loading-screen')) {
+        debug.innerText = 'STUCK? TRY REFRESHING OR CLEARING CACHE.';
+        debug.style.color = '#ef4444';
+        debug.style.opacity = '1';
+      }
+    }, 8000);
+  </script>
 </body>
 </html>
