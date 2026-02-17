@@ -2,20 +2,15 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 
-const startApp = () => {
-  const container = document.getElementById('root');
-  if (!container) return;
-  
+const container = document.getElementById('root');
+
+if (container) {
   const root = createRoot(container);
   root.render(
     <React.StrictMode>
       <App />
     </React.StrictMode>
   );
-};
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', startApp);
 } else {
-  startApp();
+  console.error("Critical Failure: Root container not found.");
 }
